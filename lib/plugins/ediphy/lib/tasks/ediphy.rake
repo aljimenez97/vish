@@ -4,7 +4,7 @@
 
 #PATHS
 DALI_EDITOR_PLUGIN_PATH = "lib/plugins/ediphy"
-DALI_EDITOR_PATH = "../ediphy"
+DALI_EDITOR_PATH = "../ediphy_adams"
 
 PRIVATE_ASSETS_ADAMS = ""
 
@@ -33,7 +33,7 @@ REGEX_RELATIVE_PATH = 'relativePath'
 REGEX_IMAGES_SRC = 'src\="images'
 REGEX_IMAGES_SRC2 = '\.\./images'
 REGEX_IMAGES_PLAIN = 'images/'
-
+REGEX_IMAGES_ADAMS = "/images/adams/"
 REGEX_IMAGES_SRC_PREV = 'src\="/images'
 
 COMMENT_TO_AVOID_COMPRESSION = "\/\* DO NOT REMOVE THIS COMMENT, It turns off compression during the asset precompilation phase, to avoid failures caused by unwanted side effects of compression., no_asset_compression \*/"
@@ -81,6 +81,7 @@ PATH_SCORM_NAV = '/assets/lib/scorm/scorm_nav.js'
 PATH_IMAGES_SRC = 'src\="/assets/images'
 PATH_IMAGES_SRC2 = '/assets/images'
 PATH_IMAGES_PLAIN = '/assets/images/'
+PATH_IMAGES_ADAMS = "/assets/images/adams/"
 
 PATH_IMAGES_HTML = 'src\="images"'
 REPLACE_VISH_PATH = 'vishPath'
@@ -115,6 +116,7 @@ namespace :ediphy do
 		
 		system "mkdir " + DALI_EDITOR_PLUGIN_PATH + "/app/assets"
 		system "mkdir " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/images"
+		system "mkdir " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/images/adams"
 		system "mkdir " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/stylesheets"
 		system "mkdir " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/stylesheets/ediphy_documents"
 		system "mkdir " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts"
@@ -153,7 +155,9 @@ namespace :ediphy do
 	end
 
 	task :rewrite_images_paths do
-		#system "sed -i 's#" + REGEX_IMAGES_SRC+ "#" + PATH_IMAGES_SRC + "#g' " + DALI_EDITOR_PLUGIN_PATH + "/vendor/lib/visor/index.ejs"
+		system "sed -i 's#" + REGEX_IMAGES_ADAMS+ "#" + PATH_IMAGES_ADAMS + "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/app-bundle.js"
+		system "sed -i 's#" + REGEX_IMAGES_ADAMS+ "#" + PATH_IMAGES_ADAMS + "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/visor-bundle.js"
+		# system "sed -i 's#" + REGEX_IMAGES_SRC+ "#" + PATH_IMAGES_SRC + "#g' " + DALI_EDITOR_PLUGIN_PATH + "/vendor/lib/visor/index.ejs"
 		#system "sed -i 's#" + REGEX_IMAGES_SRC2+ "#" + PATH_IMAGES_SRC2 + "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/stylesheets/ediphy_documents/textStyles.css"
 		#system "sed -i 's#" + REGEX_IMAGES_PLAIN+ "#" + PATH_IMAGES_PLAIN + "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/app-bundle.js"
 	end
