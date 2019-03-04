@@ -36,7 +36,7 @@ class ExcursionsController < ApplicationController
             redirect_to "/"
           end
         else
-          @resource_suggestions = RecommenderSystem.resource_suggestions({:user => current_subject, :lo => @excursion, :n=>10, :models => [Excursion]})
+          @resource_suggestions = RecommenderSystemAB.resource_suggestions({:user => current_subject, :lo => @excursion, :n=>10, :models => [Excursion]})
           ActorHistorial.saveAO(current_subject,@excursion)
           render
         end

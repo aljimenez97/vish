@@ -30,6 +30,7 @@ module SocialStream
 
             has activity_object.popularity, :as => :popularity, :sortable => true
             has activity_object.qscore, :as => :qscore, :sortable => true
+            has activity_object.reviewers_qscore_loriam_int, :as => :reviewers_qscore_loriam_int, :sortable => true, :type => :integer
             has activity_object.ranking, :as => :ranking, :sortable => true
 
             has activity_object.tags(:id), :as => :tag_ids

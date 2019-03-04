@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 ###############
-# ViSH Recommender System (and Search Engine)
+# ViSH Recommender System
 ###############
 
 class RecommenderSystem

@@ -105,6 +105,10 @@ class Search
       opts[:with][:qscore] = qualityThreshold..1000000
     end
 
+    if options[:reviewers_qscore_loriam_int]
+      opts[:with][:reviewers_qscore_loriam_int] = 1..1000000
+    end
+
     #Filter by tags
     if options[:tags]
       if options[:tags].is_a? String

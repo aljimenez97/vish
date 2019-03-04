@@ -43,6 +43,7 @@ class VishLoep
   end
 
   def self.fillActivityObjectMetrics(ao,loepData)
+    ao.update_column :reviewers_qscore_loriam, loepData["Metric Score: LORI Arithmetic Mean"] if loepData["Metric Score: LORI Arithmetic Mean"].is_a? Numeric
     ao.update_column :reviewers_qscore, loepData["Metric Score: LORI WAM CW"] if loepData["Metric Score: LORI WAM CW"].is_a? Numeric
     ao.update_column :users_qscore, loepData["Metric Score: WBLT-S Arithmetic Mean"] if loepData["Metric Score: WBLT-S Arithmetic Mean"].is_a? Numeric
     ao.update_column :teachers_qscore, loepData["Metric Score: WBLT-T Arithmetic Mean"] if loepData["Metric Score: WBLT-T Arithmetic Mean"].is_a? Numeric

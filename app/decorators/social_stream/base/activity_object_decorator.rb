@@ -243,6 +243,9 @@ ActivityObject.class_eval do
 
     self.update_column :qscore, overallQualityScore
 
+    #LORI AM
+    self.update_column :reviewers_qscore_loriam_int, [self.reviewers_qscore_loriam.to_f * 100000, 999999].min unless self.reviewers_qscore_loriam.nil?
+
     after_update_qscore
 
     overallQualityScore
