@@ -11,6 +11,9 @@ class RecommenderSystemQ
     preSelectionLOs.map{ |lo|
       lo.score = qualityScore(lo)
     }
+    pL = preSelectionLOs.length
+    qL = pL/4
+    preSelectionLOs = preSelectionLOs.sort { |a,b|  b.score <=> a.score }.first(qL).sample(options[:n]) if (preSelectionLOs.length > qL and qL > 0)
     preSelectionLOs
   end
 

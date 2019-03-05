@@ -16,6 +16,7 @@ class RecommenderSystemAB
 
     #Step 2: Scoring
     rn = rand
+    # rn = 0.3, for testing purposes
     if rn > 0.75
       #Case A. CB + Quality Metrics
       rankedLOs = RecommenderSystemCQ.calculateScore(preSelectionLOs,options)
