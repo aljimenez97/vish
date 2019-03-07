@@ -5,7 +5,8 @@
     generated_id = "cat-" + obj_id.to_s + "-" + generated_id if defined?(obj_id)
   %>
 
-  <%= link_to(excursion_url(excursion)) do %>
+  <% excursion_url = excursion_url(excursion,{:tr => @generated_rec_trseid}) %>
+  <%= link_to(excursion_url) do %>
     <!-- image/icon -->
     <div class="container-img">
       <div class="img-box" id="<%=generated_id%>"></div>
@@ -35,7 +36,7 @@
   <div class="caption">
     <!--Title -->
     <h6>
-      <%= link_to excursion.title, excursion %>
+      <%= link_to excursion.title, excursion_url %>
     </h6>
     <!--Author -->
     <div class="author">

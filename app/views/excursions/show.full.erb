@@ -30,7 +30,7 @@
 			options["TrackingSystemRelatedEntryId"] = "<%= params['trseid'] %>";
 		<% end %>
 	<%end%>
-
+	
 	//LOEP configuration
 	<% unless Vish::Application.config.APP_CONFIG['loep'].nil? or @excursion.nil? or @excursion.activity_object.nil? %>
 		<% loepConfig = Vish::Application.config.APP_CONFIG['loep'] %>

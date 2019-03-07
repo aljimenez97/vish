@@ -20,22 +20,32 @@ class RecommenderSystemAB
     if rn > 0.75
       #Case A. CB + Quality Metrics
       rankedLOs = RecommenderSystemCQ.calculateScore(preSelectionLOs,options)
+      options[:recEngine] = "cq"
     elsif rn > 0.5
       #Case B. CB
       rankedLOs = RecommenderSystemC.calculateScore(preSelectionLOs,options)
+      options[:recEngine] = "c"
     elsif rn > 0.25
       #Case C. Quality Metrics
       rankedLOs = RecommenderSystemQ.calculateScore(preSelectionLOs,options)
+      options[:recEngine] = "q"
     else
       #Case D. Random
       rankedLOs = RecommenderSystemR.calculateScore(preSelectionLOs,options)
+      options[:recEngine] = "r"
     end
 
     #Step 3: Sorting
     sortedLOs = rankedLOs.sort { |a,b|  b.score <=> a.score }
 
     #Step 4: Delivering
-    return sortedLOs.first(options[:n])
+    deliveredLOs = sortedLOs.first(options[:n])
+
+    options[:los] = deliveredLOs
+    tsentry = trackGeneratedRecommendation(options,options[:request],options[:user])
+    tsentryId = (!tsentry.nil? and tsentry.persisted?) ? tsentry.id : nil
+
+    return [deliveredLOs,tsentryId]
   end
 
 
@@ -76,4 +86,27 @@ class RecommenderSystemAB
 
     return preSelection
   end
+
+  def self.trackGeneratedRecommendation(options,request,current_subject)
+    return unless Vish::Application.config.trackingSystem
+    return if TrackingSystemEntry.isBot?(request)
+    return if options.blank? or !options[:recEngine].is_a? String or options[:lo].nil? or options[:los].blank?
+
+    tsentry = TrackingSystemEntry.new
+    tsentry.app_id = "ViSHRecommendations"
+    tsentry.user_agent = request.user_agent
+    tsentry.referrer = request.referrer
+    tsentry.user_logged = (current_subject.nil? ? false : true)
+
+    data = {}
+    data["rsEngine"] = options[:recEngine]
+    data["lo_id"] = options[:lo].id
+    data["reclo_ids"] = options[:los].map{|lo| lo.id}
+
+    tsentry.data = data.to_json
+    tsentry.save
+
+    return tsentry
+  end
+
 end
