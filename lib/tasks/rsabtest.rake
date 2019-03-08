@@ -14,7 +14,7 @@ namespace :rsabtest do
   end
 
   #Usage
-  #Development:   bundle exec rake rsabtest:generateReport[true,false]
+  #Development:   bundle exec rake rsabtest:generateReport[true,true]
   task :generateReport, [:prepare, :check] => :environment do |t,args|
     args.with_defaults(:prepare => "true", :check => "true")
     require 'descriptive_statistics/safe'
@@ -52,7 +52,7 @@ namespace :rsabtest do
 
             #Check if recommendation was accepted
 
-            Approach A: consider only one related entry (the one with max time spent)
+            # Approach A: consider only one related entry (the one with max time spent)
             selectedRelatedEntries = relatedEntries
             if relatedEntries.length > 1
               #Select entry with max time
@@ -116,7 +116,7 @@ namespace :rsabtest do
 
       writeInFile("Generated recommendations: '" + generatedRecommendations[r].to_s + "'")
       writeInFile("Accepted recommendations: '" + acceptedRecommendations[r].to_s + "'")
-      writeInFile("Acceptance rate: '" + (acceptedRecommendations[r]/generatedRecommendations[r].to_f*1000).round(1).to_s + "‰'")
+      writeInFile("Acceptance rate: '" + (acceptedRecommendations[r]/generatedRecommendations[r].to_f*100).round(1).to_s + "%'")
       writeInFile("Average time of recommendations: '" + acceptedRecommendationsTime[r].mean.round(2).to_s + "'")
       writeInFile("Standard deviation of time of recommendations: '" + acceptedRecommendationsTime[r].standard_deviation.round(2).to_s + "'")
       writeInFile("Average quality of recommendations: '" + acceptedRecommendationsQuality[r].mean.round(2).to_s + "'")
@@ -129,10 +129,32 @@ namespace :rsabtest do
 
   task :checkEntries => :environment do |t,args|
     printTitle("Checking Tracking System Entries")
-    Rake::Task["trsystem:removeBotEntries"].invoke
+    Rake::Task["rsabtest:removeInvalidEntries"].invoke
     Rake::Task["trsystem:populateRelatedExcursions"].invoke
     Rake::Task["trsystem:checkEntriesOfExcursions"].invoke
     Rake::Task["trsystem:deleteEntriesOfRemovedExcursions"].invoke
+    printTitle("Task finished [checkEntries]")
+  end
+
+  #Remove invalid tracking system entries for ab test. Do not use in production.
+  #Usage
+  #Development:   bundle exec rake rsabtest:removeInvalidEntries
+  task :removeInvalidEntries, [:prepare] => :environment do |t,args|
+    printTitle("Removing invalid tracking system entries for ab test")
+
+    entriesDestroyed = 0
+
+    ActiveRecord::Base.uncached do
+      TrackingSystemEntry.find_each batch_size: 1000 do |e|
+        if TrackingSystemEntry.isUserAgentBot?(e.user_agent) or !TrackingSystemEntry.isUserAgentDesktop?(e.user_agent)
+          e.delete
+          entriesDestroyed += 1
+        end
+      end
+    end
+
+    printTitle(entriesDestroyed.to_s + " entries destroyed")
+    printTitle("Task finished [removeInvalidEntries]")
   end
 
 end

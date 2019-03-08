@@ -89,7 +89,7 @@ class RecommenderSystemAB
 
   def self.trackGeneratedRecommendation(options,request,current_subject)
     return unless Vish::Application.config.trackingSystem
-    return if TrackingSystemEntry.isBot?(request)
+    return if TrackingSystemEntry.isBot?(request) or !TrackingSystemEntry.isDesktop?(request)
     return if options.blank? or !options[:recEngine].is_a? String or options[:lo].nil? or options[:los].blank?
 
     tsentry = TrackingSystemEntry.new

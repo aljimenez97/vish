@@ -17,6 +17,10 @@ class TrackingSystemEntry < ActiveRecord::Base
     return isUserAgentBot?(request.env["HTTP_USER_AGENT"])
   end
 
+  def self.isDesktop?(request)
+    return isUserAgentDesktop?(request.env["HTTP_USER_AGENT"])
+  end
+
   def self.isUserAgentBot?(user_agent)
     return true if user_agent.blank?
     matches = user_agent.match(/(BingPreview|eSobiSubscriber|startmebot|Mail.RU_Bot|SeznamBot|360Spider|bingbot|MJ12bot|web spider|YandexBot|Baiduspider|AhrefsBot|OrangeBot|msnbot|spbot|facebook|postrank|voyager|twitterbot|googlebot|slurp|butterfly|pycurl|tweetmemebot|metauri|evrinid|reddit|digg)/mi)
