@@ -178,29 +178,28 @@ namespace :trsystem do
   #Usage
   #Development:   bundle exec rake trsystem:limitEntriesOfExcursions
   task :limitEntriesOfExcursions, [:prepare] => :environment do |t,args|
-    args.with_defaults(:prepare => true)
-    Rake::Task["trsystem:prepare"].invoke if args.prepare
+    # args.with_defaults(:prepare => true)
+    # Rake::Task["trsystem:prepare"].invoke if args.prepare
 
-    writeInTRS("")
-    writeInTRS("Limiting stored tracking system entries of excursions")
-    writeInTRS("")
+    # writeInTRS("")
+    # writeInTRS("Limiting stored tracking system entries of excursions")
+    # writeInTRS("")
 
-    n = (Vish::Application.config.APP_CONFIG["tracking_system"] and Vish::Application.config.APP_CONFIG["tracking_system"]["max_interactions_per_lo"].is_a? Integer) ? Vish::Application.config.APP_CONFIG["tracking_system"]["max_interactions_per_lo"] : 2000
+    # n = (Vish::Application.config.APP_CONFIG["tracking_system"] and Vish::Application.config.APP_CONFIG["tracking_system"]["max_interactions_per_lo"].is_a? Integer) ? Vish::Application.config.APP_CONFIG["tracking_system"]["max_interactions_per_lo"] : 2000
 
-    unless n < 0
-      ActiveRecord::Base.uncached do
-        Excursion.pluck(:id).each do |eId|
-          vvEntries = TrackingSystemEntry.where(:app_id=>"ViSH Viewer", :checked => true, :related_entity_id => eId)
-          if vvEntries.count > n
-            ids = vvEntries.limit(n).order("created_at DESC").pluck(:id)
-            vvEntries.where("id not in (?)", ids).find_each batch_size: 1000 do |e|
-              e.delete
-            end
-          end
-        end
-      end
-    end
-
+    # unless n < 0
+    #   ActiveRecord::Base.uncached do
+    #     Excursion.pluck(:id).each do |eId|
+    #       vvEntries = TrackingSystemEntry.where(:app_id=>"ViSH Viewer", :checked => true, :related_entity_id => eId)
+    #       if vvEntries.count > n
+    #         ids = vvEntries.limit(n).order("created_at DESC").pluck(:id)
+    #         vvEntries.where("id not in (?)", ids).find_each batch_size: 1000 do |e|
+    #           e.delete
+    #         end
+    #       end
+    #     end
+    #   end
+    # end
     writeInTRS("Task finished")
   end
 
