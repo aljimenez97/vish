@@ -1,25 +1,17 @@
 # encoding: utf-8
-REPORT_FILE_PATH = "reports/rsab.txt"
+REPORT_FILE_PATH = "reports/rsab.xlsx"
+PERMANENCY_THRESHOLD = 30
 
 namespace :rsabtest do
 
-  task :prepare do
-    require "#{Rails.root}/lib/task_utils"
-    prepareFile(REPORT_FILE_PATH)
-    writeInFile("Recommender System AB Test Report")
-  end
-
-  def writeInFile(line)
-    write(line,REPORT_FILE_PATH)
-  end
-
   #Usage
-  #Development:   bundle exec rake rsabtest:generateReport[true,true]
-  task :generateReport, [:prepare, :check] => :environment do |t,args|
-    args.with_defaults(:prepare => "true", :check => "true")
+  #Development:   bundle exec rake rsabtest:generateReport[true]
+  task :generateReport, [:check] => :environment do |t,args|
+    args.with_defaults(:check => "true")
+    require "#{Rails.root}/lib/task_utils"
     require 'descriptive_statistics/safe'
-    Rake::Task["rsabtest:prepare"].invoke if args.prepare == "true"
     Rake::Task["rsabtest:checkEntries"].invoke if args.check == "true"
+    
     printTitle("Generating AB Test Report")
 
     startDate = DateTime.new(2019,3,1) #(year,month,day)
@@ -108,23 +100,59 @@ namespace :rsabtest do
       end
     end
 
-
     rsEngines.each do |r|
-      writeInFile("System: '" + r + "'")
       acceptedRecommendationsTime[r].push(0) if acceptedRecommendationsTime[r].blank?
       acceptedRecommendationsQuality[r].push(0) if acceptedRecommendationsQuality[r].blank?
 
-      writeInFile("Generated recommendations: '" + generatedRecommendations[r].to_s + "'")
-      writeInFile("Accepted recommendations: '" + acceptedRecommendations[r].to_s + "'")
-      writeInFile("Acceptance rate: '" + (acceptedRecommendations[r]/generatedRecommendations[r].to_f*100).round(1).to_s + "%'")
-      writeInFile("Average time of recommendations: '" + acceptedRecommendationsTime[r].mean.round(2).to_s + "'")
-      writeInFile("Standard deviation of time of recommendations: '" + acceptedRecommendationsTime[r].standard_deviation.round(2).to_s + "'")
-      writeInFile("Average quality of recommendations: '" + acceptedRecommendationsQuality[r].mean.round(2).to_s + "'")
-      writeInFile("Standard deviation of quality of recommendations: '" + acceptedRecommendationsQuality[r].standard_deviation.round(2).to_s + "'")
-      writeInFile("")
+      puts r
+      puts("Generated recommendations: '" + generatedRecommendations[r].to_s + "'")
+      puts("Accepted recommendations: '" + acceptedRecommendations[r].to_s + "'")
+      puts("Acceptance rate: '" + (acceptedRecommendations[r]/generatedRecommendations[r].to_f*100).round(1).to_s + "%'")
+      puts("Permanency rate: '" + (acceptedRecommendationsTime[r].select{|t| t>=PERMANENCY_THRESHOLD}.length/acceptedRecommendationsTime[r].length.to_f*100).round(1).to_s + "%'")
+      puts("Average time of recommendations: '" + acceptedRecommendationsTime[r].mean.round(2).to_s + "'")
+      puts("Standard deviation of time of recommendations: '" + acceptedRecommendationsTime[r].standard_deviation.round(2).to_s + "'")
+      puts("Average quality of recommendations: '" + acceptedRecommendationsQuality[r].mean.round(2).to_s + "'")
+      puts("Standard deviation of quality of recommendations: '" + acceptedRecommendationsQuality[r].standard_deviation.round(2).to_s + "'")
+      puts("")
     end
 
-    printTitle("Task finished")
+    Axlsx::Package.new do |p|
+      p.workbook.add_worksheet(:name => "RS AB Test Report") do |sheet|
+        rows = []
+        rows << ["RS AB Test Report"]
+        rows << ["RS Engine","Generated recommendations","Accepted recommendations","Acceptance rate","Permanency Rate","Time of recommendations","","Quality of recommendations",""]
+        rows << ["","","","","M","SD","M","SD"]
+        rowIndex = rows.length
+        
+        rows += Array.new(rsEngines.length).map{|r|[]}
+        rsEngines.each_with_index do |n,i|
+          r = rsEngines[i]
+          rows[rowIndex+i] = [r,generatedRecommendations[r],acceptedRecommendations[r],(acceptedRecommendations[r]/generatedRecommendations[r].to_f*100).round(1),(acceptedRecommendationsTime[r].select{|t| t>=PERMANENCY_THRESHOLD}.length/acceptedRecommendationsTime[r].length.to_f*100).round(1),acceptedRecommendationsTime[r].mean.round(2),acceptedRecommendationsTime[r].standard_deviation.round(2),acceptedRecommendationsQuality[r].mean.round(2),acceptedRecommendationsQuality[r].standard_deviation.round(2)]
+        end
+
+        rsEngines.each_with_index do |n,i|
+          r = rsEngines[i]
+          rows << []
+          rows << [r]
+          rows << ["Time","Q"]
+          puts "Invalid data!" if acceptedRecommendationsTime[r].length != acceptedRecommendationsQuality[r].length
+          
+          rowIndex = rows.length
+          rows += Array.new(acceptedRecommendationsTime[r].length).map{|r|[]}
+          acceptedRecommendationsTime[r].each_with_index do |n,i|
+            rows[rowIndex+i] = [acceptedRecommendationsTime[r][i],acceptedRecommendationsQuality[r][i]]
+          end
+        end
+
+        rows.each do |row|
+          sheet.add_row row
+        end
+      end
+
+      p.serialize(REPORT_FILE_PATH)
+    end
+
+    puts("Task Finished. Results generated at " + REPORT_FILE_PATH)
   end
 
   task :checkEntries => :environment do |t,args|
@@ -139,7 +167,7 @@ namespace :rsabtest do
   #Remove invalid tracking system entries for ab test. Do not use in production.
   #Usage
   #Development:   bundle exec rake rsabtest:removeInvalidEntries
-  task :removeInvalidEntries, [:prepare] => :environment do |t,args|
+  task :removeInvalidEntries => :environment do |t,args|
     printTitle("Removing invalid tracking system entries for ab test")
 
     entriesDestroyed = 0
