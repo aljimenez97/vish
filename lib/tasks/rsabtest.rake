@@ -120,6 +120,7 @@ namespace :rsabtest do
       p.workbook.add_worksheet(:name => "RS AB Test Report") do |sheet|
         rows = []
         rows << ["RS AB Test Report"]
+        rows << ["Period: " + startDate.strftime("%d/%m/%Y") + " - " + endDate.strftime("%d/%m/%Y") + " (" + (endDate-startDate).to_i.to_s + " days)"]
         rows << ["RS Engine","Generated recommendations","Accepted recommendations","Acceptance rate","Permanency Rate","Time of recommendations","","Quality of recommendations",""]
         rows << ["","","","","M","SD","M","SD"]
         rowIndex = rows.length
