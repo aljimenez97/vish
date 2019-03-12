@@ -15,7 +15,9 @@ namespace :rsabtest do
     printTitle("Generating AB Test Report")
 
     startDate = DateTime.new(2019,3,1) #(year,month,day)
-    endDate = DateTime.new(2019,6,30)
+    endDate = DateTime.new(2020,6,30)
+    firstDate = endDate
+    lastDate = startDate
 
     rsEngines = ["cq","c","q","r"]
     generatedRecommendations = {}
@@ -33,6 +35,8 @@ namespace :rsabtest do
     ActiveRecord::Base.uncached do
       TrackingSystemEntry.where(:app_id=>"ViSHRecommendations", :created_at => startDate..endDate).find_each batch_size: 1000 do |e|
         begin
+          lastDate = e.created_at.to_date if e.created_at.to_date > lastDate
+          firstDate = e.created_at.to_date if e.created_at.to_date < firstDate
           d = JSON(e["data"])
           if rsEngines.include?(d["rsEngine"])
             
@@ -120,7 +124,8 @@ namespace :rsabtest do
       p.workbook.add_worksheet(:name => "RS AB Test Report") do |sheet|
         rows = []
         rows << ["RS AB Test Report"]
-        rows << ["Period: " + startDate.strftime("%d/%m/%Y") + " - " + endDate.strftime("%d/%m/%Y") + " (" + (endDate-startDate).to_i.to_s + " days)"]
+        rows << ["Period: " + startDate.strftime("%d/%m/%Y") + " - " + endDate.strftime("%d/%m/%Y") + " (" + ((endDate-startDate).to_i+1).to_s + " days)"]
+        rows << ["Entries period: " + firstDate.strftime("%d/%m/%Y") + " - " + lastDate.strftime("%d/%m/%Y") + " (" + ((lastDate - firstDate).to_i+1).to_i.to_s + " days)"]
         rows << ["RS Engine","Generated recommendations","Accepted recommendations","Acceptance rate","Permanency Rate","Time of recommendations","","Quality of recommendations",""]
         rows << ["","","","","M","SD","M","SD"]
         rowIndex = rows.length
