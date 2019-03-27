@@ -80,7 +80,10 @@ class RecommenderSystemAB
 
     # D. N
     searchOpts[:n] = [400,Vish::Application::config.rs_max_preselection_size].min
-    
+
+    #E. Date.
+    searchOpts[:endDate] = Time.parse("1-3-2019")
+
     #Call search engine
     preSelection += (Search.search(searchOpts).compact rescue [])
 
