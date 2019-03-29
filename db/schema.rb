@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20190304141602) do
+ActiveRecord::Schema.define(:version => 20190329091126) do
 
   create_table "activities", :force => true do |t|
     t.integer  "activity_verb_id"
@@ -108,6 +108,7 @@ ActiveRecord::Schema.define(:version => 20190304141602) do
     t.decimal  "interaction_qscore",                        :precision => 12, :scale => 6
     t.decimal  "reviewers_qscore_loriam",                   :precision => 12, :scale => 6
     t.integer  "reviewers_qscore_loriam_int"
+    t.boolean  "harvested",                                                                :default => false
   end
 
   create_table "activity_objects_wa_resources_galleries", :id => false, :force => true do |t|
@@ -774,6 +775,8 @@ ActiveRecord::Schema.define(:version => 20190304141602) do
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
     t.integer  "private_student_group_id"
+    t.string   "provider"
+    t.string   "uid"
   end
 
   add_index "users", ["actor_id"], :name => "index_users_on_actor_id"
