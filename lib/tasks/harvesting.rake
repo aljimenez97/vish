@@ -4,7 +4,8 @@ namespace :harvesting do
 
   #Usage
   #Development:   bundle exec rake harvesting:harvest
-  #In production: bundle exec rake harvesting:harvest RAILS_ENV=production
+  #In production: rvmsudo bundle exec rake harvesting:harvest RAILS_ENV=production
+  #sudo chown www-data:www-data -R .
   task :harvest => :environment do
     puts "#####################################"
     puts "Retrieving Learning Objects from other ViSH instances"
