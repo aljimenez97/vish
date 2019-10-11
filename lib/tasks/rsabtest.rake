@@ -78,29 +78,29 @@ namespace :rsabtest do
 
             #Check if recommendation was accepted
 
-            # Approach A: consider only one related entry (the one with max time spent)
-            selectedRelatedEntries = relatedEntries
-            if relatedEntries.length > 1
-              #Select entry with max time
-              maxTime = -1
-              sre = nil
-              relatedEntries.each do |re|
-                begin
-                  re_d = JSON(re["data"])
-                  re_duration = re_d["duration"].to_i
-                  if re_duration > maxTime
-                    maxTime = re_duration
-                    sre = re
-                  end
-                rescue Exception => e
-                  puts "Exception processing VV entry: " + e.message
-                end
-              end
-              selectedRelatedEntries = [sre]
-            end
+            # # Approach A: consider only one related entry (the one with max time spent)
+            # selectedRelatedEntries = relatedEntries
+            # if relatedEntries.length > 1
+            #   #Select entry with max time
+            #   maxTime = -1
+            #   sre = nil
+            #   relatedEntries.each do |re|
+            #     begin
+            #       re_d = JSON(re["data"])
+            #       re_duration = re_d["duration"].to_i
+            #       if re_duration > maxTime
+            #         maxTime = re_duration
+            #         sre = re
+            #       end
+            #     rescue Exception => e
+            #       puts "Exception processing VV entry: " + e.message
+            #     end
+            #   end
+            #   selectedRelatedEntries = [sre]
+            # end
 
             # Approach B: consider all entries
-            # selectedRelatedEntries = relatedEntries
+            selectedRelatedEntries = relatedEntries
 
             selectedRelatedEntries.each do |sre|
               #Count recommendation acceptance
