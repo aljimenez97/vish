@@ -214,7 +214,7 @@ namespace :rsabtest do
     Rake::Task["rsabtest:removeInvalidEntries"].invoke
     Rake::Task["trsystem:populateRelatedExcursions"].invoke
     Rake::Task["trsystem:checkEntriesOfExcursions"].invoke
-    Rake::Task["trsystem:deleteEntriesOfRemovedExcursions"].invoke
+    # Rake::Task["trsystem:deleteEntriesOfRemovedExcursions"].invoke
     printTitle("Task finished [checkEntries]")
   end
 
@@ -228,8 +228,8 @@ namespace :rsabtest do
 
     ActiveRecord::Base.uncached do
       TrackingSystemEntry.find_each batch_size: 1000 do |e|
-        if TrackingSystemEntry.isUserAgentBot?(e.user_agent) or !TrackingSystemEntry.isUserAgentDesktop?(e.user_agent)
-          e.delete
+        if TrackingSystemEntry.isUserAgentBot?(e.user_agent) or (e.app_id==="ViSHRecommendations" and !TrackingSystemEntry.isUserAgentDesktop?(e.user_agent))
+          # e.delete
           entriesDestroyed += 1
         end
       end
