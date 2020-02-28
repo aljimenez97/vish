@@ -8,6 +8,8 @@ DALI_EDITOR_PATH = "../ediphy"
 
 PRIVATE_ASSETS_ADAMS = ""
 
+STATIC_ASSETS_PATH = "public/"
+
 ######################
 # 			REGEXP       #
 ######################
@@ -50,6 +52,7 @@ PATH_API_PLUGIN = '\/assets/plugins/"'
 #INDEX
 PATH_LIB = 'src\=\"/assets/lib'
 PATH_JS = 'src\=\"/assets/js'
+PATH_THEMES = 'src\=\"/assets/themes'
 PATH_PLUGINS = 'src\=\"/assets/editor/plugins.js"'
 PATH_BUNDLE = 'src\=\"/assets/editor/app-bundle.js"'
 PATH_VISOR_BUNDLE = 'src\=\"/assets/editor/visor-bundle.js"'
@@ -127,7 +130,8 @@ namespace :ediphy do
 		#system "mkdir " + DALI_EDITOR_PLUGIN_PATH + "/vendor/lib/scorm"
 
 		system "cp -r " + DALI_EDITOR_PATH + "/dist/images " +  DALI_EDITOR_PLUGIN_PATH + "/app/assets/images"
-		system "cp -r " + DALI_EDITOR_PATH + "/dist/themes " +  DALI_EDITOR_PLUGIN_PATH + "/app/assets/themes"
+		system "cp -r " + DALI_EDITOR_PATH + "/dist/themes " +  STATIC_ASSETS_PATH
+    system "cp -r " + DALI_EDITOR_PATH + "/dist/transitions " +  STATIC_ASSETS_PATH
 		system "cp -r " + DALI_EDITOR_PATH + "/dist/lib " +  DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts"
 		
 		#system "cp -r " + DALI_EDITOR_PATH + "/plugins " +  DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/plugins"
@@ -149,6 +153,7 @@ namespace :ediphy do
 
 	task :rewrite_entry_point_paths do
 		#REWRITE INDEX.HTML.ERB
+    # 		system "sed -i 's#" + REGEX_LIB+ "#" + PATH_LIB + "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/views/ediphy_documents/_ediphy_document.full.erb"
 		system "sed -i 's#" + REGEX_LIB+ "#" + PATH_LIB + "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/views/ediphy_documents/_ediphy_document.full.erb"
 		system "sed -i 's#" + REGEX_JS+ "#" + PATH_JS + "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/views/ediphy_documents/_ediphy_document.full.erb"
 		system "sed -i 's#" + REGEX_BUNDLE+ "#" + PATH_BUNDLE + "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/views/ediphy_documents/_ediphy_document.full.erb"
