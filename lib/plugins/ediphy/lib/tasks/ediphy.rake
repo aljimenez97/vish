@@ -130,8 +130,8 @@ namespace :ediphy do
 		#system "mkdir " + DALI_EDITOR_PLUGIN_PATH + "/vendor/lib/scorm"
 
 		system "cp -r " + DALI_EDITOR_PATH + "/dist/images " +  DALI_EDITOR_PLUGIN_PATH + "/app/assets/images"
-		system "cp -r " + DALI_EDITOR_PATH + "/dist/themes " +  STATIC_ASSETS_PATH
-    system "cp -r " + DALI_EDITOR_PATH + "/dist/transitions " +  STATIC_ASSETS_PATH
+		system "cp -r  /ediphy/dist/transitions /vish/public/"
+    system "cp -r  /ediphy/dist/themes /vish/public/"
 		system "cp -r " + DALI_EDITOR_PATH + "/dist/lib " +  DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts"
 		
 		#system "cp -r " + DALI_EDITOR_PATH + "/plugins " +  DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/plugins"
