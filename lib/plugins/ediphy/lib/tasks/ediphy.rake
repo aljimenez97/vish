@@ -129,7 +129,9 @@ namespace :ediphy do
 		#system "mkdir " + DALI_EDITOR_PLUGIN_PATH + "/vendor/lib/visor"
 		#system "mkdir " + DALI_EDITOR_PLUGIN_PATH + "/vendor/lib/scorm"
 
+    puts "Copying assets..."
 		system "cp -r " + DALI_EDITOR_PATH + "/dist/images " +  DALI_EDITOR_PLUGIN_PATH + "/app/assets/images"
+    system "ls /ediphy/dist/transitions"
 		system "cp -r  /ediphy/dist/transitions /vish/public/"
     system "cp -r  /ediphy/dist/themes /vish/public/"
 		system "cp -r " + DALI_EDITOR_PATH + "/dist/lib " +  DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts"
