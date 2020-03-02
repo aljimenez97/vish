@@ -36,6 +36,12 @@ REGEX_IMAGES_SRC = 'src\="images'
 REGEX_IMAGES_SRC2 = '\.\./images'
 REGEX_IMAGES_PLAIN = 'images/'
 
+# THEMES
+REGEX_TRANSITIONS = '/transitions/'
+REGEX_TRANSITIONS_ASSETS = '/assets/transitions/'
+REGEX_THEMES = 'src=\.\/themes\/'
+REGEX_THEMES_ASSETS = 'src=\/assets/themes\/'
+
 REGEX_IMAGES_SRC_PREV = 'src\="/images'
 
 COMMENT_TO_AVOID_COMPRESSION = "\/\* DO NOT REMOVE THIS COMMENT, It turns off compression during the asset precompilation phase, to avoid failures caused by unwanted side effects of compression., no_asset_compression \*/"
@@ -165,6 +171,10 @@ namespace :ediphy do
 		#system "sed -i 's#" + REGEX_IMAGES_SRC+ "#" + PATH_IMAGES_SRC + "#g' " + DALI_EDITOR_PLUGIN_PATH + "/vendor/lib/visor/index.ejs"
 		#system "sed -i 's#" + REGEX_IMAGES_SRC2+ "#" + PATH_IMAGES_SRC2 + "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/stylesheets/ediphy_documents/textStyles.css"
 		#system "sed -i 's#" + REGEX_IMAGES_PLAIN+ "#" + PATH_IMAGES_PLAIN + "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/app-bundle.js"
+    puts "Rewiring asset paths..."
+		system "sed -i 's#" + REGEX_TRANSITIONS+ "#" + REGEX_TRANSITIONS_ASSETS + "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/app-bundle.js"
+		system "sed -i 's#" + REGEX_THEMES+ "#" + REGEX_THEMES_ASSETS + "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/app-bundle.js"
+
 	end
 
 	task :rewrite_visor_path do
