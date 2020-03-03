@@ -137,9 +137,8 @@ namespace :ediphy do
 
     puts "Copying assets..."
 		system "cp -r " + DALI_EDITOR_PATH + "/dist/images " +  DALI_EDITOR_PLUGIN_PATH + "/app/assets/images"
-    system "ls /ediphy/dist/transitions"
-		system "cp -r  /ediphy/dist/transitions /vish/public/"
-    system "cp -r  /ediphy/dist/themes /vish/public/"
+		system "cp -r " + DALI_EDITOR_PATH + "/dist/transitions " +  DALI_EDITOR_PLUGIN_PATH + "/app/assets/images"
+		system "cp -r " + DALI_EDITOR_PATH + "/dist/themes " +  DALI_EDITOR_PLUGIN_PATH + "/app/assets/images"
 		system "cp -r " + DALI_EDITOR_PATH + "/dist/lib " +  DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts"
 		
 		#system "cp -r " + DALI_EDITOR_PATH + "/plugins " +  DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/plugins"
