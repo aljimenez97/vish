@@ -125,6 +125,7 @@ namespace :ediphy do
 		system "mkdir " + DALI_EDITOR_PLUGIN_PATH + "/app/assets"
 		system "mkdir " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/images"
 		system "mkdir " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/themes"
+		system "mkdir " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/transitions"
 		system "mkdir " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/stylesheets"
 		system "mkdir " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/stylesheets/ediphy_documents"
 		system "mkdir " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts"
