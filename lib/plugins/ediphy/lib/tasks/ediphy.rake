@@ -121,7 +121,7 @@ namespace :ediphy do
 		system "rm -rf " + DALI_EDITOR_PLUGIN_PATH + "/app/assets"
 		system "rm -rf " + DALI_EDITOR_PLUGIN_PATH + "/extras"
 
-		
+    puts "Creating folders..."
 		system "mkdir " + DALI_EDITOR_PLUGIN_PATH + "/app/assets"
 		system "mkdir " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/images"
 		system "mkdir " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/themes"
