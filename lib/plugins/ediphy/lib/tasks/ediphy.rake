@@ -41,6 +41,8 @@ REGEX_TRANSITIONS = '/transitions/'
 REGEX_TRANSITIONS_ASSETS = '/assets/transitions/'
 REGEX_THEMES = 'url(./themes/'
 REGEX_THEMES_ASSETS = 'url(/assets/themes/'
+REGEX_THEMES2 = 'themes.*thumbnail.jpg'
+REGEX_THEMES_ASSETS2 = '/assets/themes.*thumbnail.jpg'
 
 REGEX_IMAGES_SRC_PREV = 'src\="/images'
 
