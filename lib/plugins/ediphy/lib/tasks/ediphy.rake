@@ -39,8 +39,8 @@ REGEX_IMAGES_PLAIN = 'images/'
 # THEMES
 REGEX_TRANSITIONS = '/transitions/'
 REGEX_TRANSITIONS_ASSETS = '/assets/transitions/'
-REGEX_THEMES = 'src=\.\/themes\/'
-REGEX_THEMES_ASSETS = 'src=\/assets/themes\/'
+REGEX_THEMES = 'url(./themes/'
+REGEX_THEMES_ASSETS = 'url(assets/themes/'
 
 REGEX_IMAGES_SRC_PREV = 'src\="/images'
 
