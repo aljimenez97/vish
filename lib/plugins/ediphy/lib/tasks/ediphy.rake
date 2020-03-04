@@ -41,8 +41,8 @@ REGEX_TRANSITIONS = '/transitions/'
 REGEX_TRANSITIONS_ASSETS = '/assets/transitions/'
 REGEX_THEMES = 'url(./themes/'
 REGEX_THEMES_ASSETS = 'url(/assets/themes/'
-REGEX_THEMES2 = 'themes.*thumbnail.jpg'
-REGEX_THEMES_ASSETS2 = '/assets/themes.*thumbnail.jpg'
+REGEX_THEMES2 = 'src:"./themes/".concat(n,"/thumbnail.jpg")'
+REGEX_THEMES_ASSETS2 = 'src:"/assets/themes/".concat(n,"/thumbnail.jpg")'
 
 REGEX_IMAGES_SRC_PREV = 'src\="/images'
 
@@ -176,6 +176,7 @@ namespace :ediphy do
     puts "Rewiring asset paths..."
 		system "sed -i 's#" + REGEX_TRANSITIONS+ "#" + REGEX_TRANSITIONS_ASSETS + "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/app-bundle.js"
 		system "sed -i 's#" + REGEX_THEMES+ "#" + REGEX_THEMES_ASSETS + "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/app-bundle.js"
+		system "sed -i 's#" + REGEX_THEMES2+ "#" + REGEX_THEMES_ASSETS 2+ "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/app-bundle.js"
 
 	end
 
