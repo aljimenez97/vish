@@ -40,7 +40,7 @@ REGEX_IMAGES_PLAIN = 'images/'
 REGEX_TRANSITIONS = '/transitions/'
 REGEX_TRANSITIONS_ASSETS = '/assets/transitions/'
 REGEX_THEMES = 'url(./themes/'
-REGEX_THEMES_ASSETS = 'url(assets/themes/'
+REGEX_THEMES_ASSETS = 'url(/assets/themes/'
 
 REGEX_IMAGES_SRC_PREV = 'src\="/images'
 
