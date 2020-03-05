@@ -143,7 +143,9 @@ namespace :ediphy do
 		system "cp -r " + DALI_EDITOR_PATH + "/dist/transitions " +  DALI_EDITOR_PLUGIN_PATH + "/app/assets/images"
 		system "cp -r " + DALI_EDITOR_PATH + "/dist/themes " +  DALI_EDITOR_PLUGIN_PATH + "/app/assets/images"
 		system "cp -r " + DALI_EDITOR_PATH + "/dist/lib " +  DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts"
-		
+		system "cp -r " + DALI_EDITOR_PATH + "/dist/theme.css " +  DALI_EDITOR_PLUGIN_PATH + "/app/assets/stylesheets"
+		system "cp -r " + DALI_EDITOR_PATH + "/dist/visor.css " +  DALI_EDITOR_PLUGIN_PATH + "/app/assets/stylesheets"
+
 		#system "cp -r " + DALI_EDITOR_PATH + "/plugins " +  DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/plugins"
 		system "cp " + DALI_EDITOR_PATH + "/dist/prod/app-bundle.min.js " +  DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/app-bundle.js"
 		system "cp " + DALI_EDITOR_PATH + "/dist/prod/visor-bundle.min.js " +  DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/visor-bundle.js"
