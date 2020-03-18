@@ -33,9 +33,9 @@ REGEX_RELATIVE_PATH = 'relativePath'
 
 #IMAGES
 REGEX_IMAGES_SRC = 'src\="images'
-REGEX_IMAGES_SRC2 = '\.\./images'
 REGEX_IMAGES_PLAIN = 'images/'
-
+REGEX_IMAGES_URL = 'url(/images/'
+REGEX_IMAGES_URL_ASSETS = 'url(/assets/images/'
 # THEMES
 REGEX_TRANSITIONS = '/transitions/'
 REGEX_TRANSITIONS_ASSETS = '/assets/transitions/'
@@ -104,7 +104,7 @@ namespace :ediphy do
 		Rake::Task["ediphy:import"].invoke
     	Rake::Task["ediphy:rewrite_api_paths"].invoke
     	Rake::Task["ediphy:rewrite_entry_point_paths"].invoke
-    	Rake::Task["ediphy:rewrite_images_paths"].invoke
+    	Rake::Task["ediphy:rewrite_assets_paths"].invoke
     	Rake::Task["ediphy:rewrite_visor_path"].invoke
     	Rake::Task["ediphy:private_assets"].invoke
 	end
@@ -173,11 +173,12 @@ namespace :ediphy do
 		system "sed -i 's#" + REGEX_BUNDLE+ "#" + PATH_BUNDLE + "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/views/ediphy_documents/_ediphy_document.full.erb"
 	end
 
-	task :rewrite_images_paths do
+	task :rewrite_assets_paths do
 		#system "sed -i 's#" + REGEX_IMAGES_SRC+ "#" + PATH_IMAGES_SRC + "#g' " + DALI_EDITOR_PLUGIN_PATH + "/vendor/lib/visor/index.ejs"
 		#system "sed -i 's#" + REGEX_IMAGES_SRC2+ "#" + PATH_IMAGES_SRC2 + "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/stylesheets/ediphy_documents/textStyles.css"
 		#system "sed -i 's#" + REGEX_IMAGES_PLAIN+ "#" + PATH_IMAGES_PLAIN + "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/app-bundle.js"
     puts "Rewiring asset paths..."
+		system "sed -i 's#" + REGEX_IMAGES_URL+ "#" + REGEX_IMAGES_URL_ASSETS + "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/app-bundle.js"
 		system "sed -i 's#" + REGEX_TRANSITIONS+ "#" + REGEX_TRANSITIONS_ASSETS + "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/app-bundle.js"
 		system "sed -i 's#" + REGEX_THEMES+ "#" + REGEX_THEMES_ASSETS + "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/app-bundle.js"
 		system "sed -i 's#" + REGEX_THEMES2+ "#" + REGEX_THEMES_ASSETS2+ "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/app-bundle.js"
