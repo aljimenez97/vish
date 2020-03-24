@@ -50,6 +50,8 @@ REGEX_THEMES_CSS2 = './theme.css'
 REGEX_THEMES_CSS_ASSETS = 'href\="/assets/theme.css"'
 REGEX_THEMES_CSS_ASSETS2 = '/assets/theme.css'
 
+REGEX_THEMES_CSS4 = "theme.css"
+REGEX_THEMES_CSS_ASSETS4 = "/assets/theme.css"
 
 REGEX_IMAGES_SRC_PREV = 'src\="/images'
 
@@ -189,7 +191,7 @@ namespace :ediphy do
 		system "sed -i 's#" + REGEX_THEMES2+ "#" + REGEX_THEMES_ASSETS2+ "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/app-bundle.js"
 		system "sed -i 's#" + REGEX_THEMES3+ "#" + REGEX_THEMES_ASSETS3+ "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/app-bundle.js"
 		system "sed -i 's#" + REGEX_THEMES_CSS+ "#" + REGEX_THEMES_CSS_ASSETS+ "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/app-bundle.js"
-		system "sed -i 's#" + REGEX_THEMES_CSS2+ "#" + REGEX_THEMES_CSS_ASSETS2+ "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/app-bundle.js"
+		system "sed -i 's#" + REGEX_THEMES_CSS4+ "#" + REGEX_THEMES_CSS_ASSETS4+ "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/app-bundle.js"
 
 	end
 
