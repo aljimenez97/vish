@@ -43,6 +43,8 @@ REGEX_THEMES = 'url(./themes/'
 REGEX_THEMES_ASSETS = 'url(/assets/themes/'
 REGEX_THEMES2 = 'src:"themes/"'
 REGEX_THEMES_ASSETS2 = 'src:"/assets/themes/"'
+
+
 REGEX_THEMES3 = '"./theme.css"'
 REGEX_THEMES_ASSETS3 = '"/assets/theme.css"'
 REGEX_THEMES_CSS = 'href\="theme.css"'
@@ -189,9 +191,11 @@ namespace :ediphy do
 		system "sed -i 's#" + REGEX_TRANSITIONS+ "#" + REGEX_TRANSITIONS_ASSETS + "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/app-bundle.js"
 		system "sed -i 's#" + REGEX_THEMES+ "#" + REGEX_THEMES_ASSETS + "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/app-bundle.js"
 		system "sed -i 's#" + REGEX_THEMES2+ "#" + REGEX_THEMES_ASSETS2+ "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/app-bundle.js"
-		system "sed -i 's#" + REGEX_THEMES3+ "#" + REGEX_THEMES_ASSETS3+ "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/app-bundle.js"
-		system "sed -i 's#" + REGEX_THEMES_CSS+ "#" + REGEX_THEMES_CSS_ASSETS+ "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/app-bundle.js"
-		system "sed -i 's#" + REGEX_THEMES_CSS4+ "#" + REGEX_THEMES_CSS_ASSETS4+ "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/app-bundle.js"
+
+    #Visor
+		system "sed -i 's#" + REGEX_THEMES3+ "#" + REGEX_THEMES_ASSETS3+ "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/visor-bundle.js"
+		system "sed -i 's#" + REGEX_THEMES_CSS+ "#" + REGEX_THEMES_CSS_ASSETS+ "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/visor-bundle.js"
+		system "sed -i 's#" + REGEX_THEMES_CSS4+ "#" + REGEX_THEMES_CSS_ASSETS4+ "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/lib/visor/index.ejs"
 
 	end
 
