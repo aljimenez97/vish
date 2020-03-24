@@ -46,7 +46,7 @@ REGEX_THEMES_ASSETS2 = 'src:"/assets/themes/"'
 REGEX_THEMES3 = '"./theme.css"'
 REGEX_THEMES_ASSETS3 = '"/assets/theme.css"'
 REGEX_THEMES_CSS = 'href\="theme.css"'
-REGEX_THEMES_CSS_ASSETS = 'href\="assets/theme.css"'
+REGEX_THEMES_CSS_ASSETS = 'href\="/assets/theme.css"'
 
 REGEX_IMAGES_SRC_PREV = 'src\="/images'
 
