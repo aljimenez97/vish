@@ -191,6 +191,8 @@ namespace :ediphy do
 		system "sed -i 's#" + REGEX_IMAGES_URL+ "#" + REGEX_IMAGES_URL_ASSETS + "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/app-bundle.js"
 		system "sed -i 's#" + REGEX_TRANSITIONS+ "#" + REGEX_TRANSITIONS_ASSETS + "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/app-bundle.js"
 		system "sed -i 's#" + REGEX_THEMES+ "#" + REGEX_THEMES_ASSETS + "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/app-bundle.js"
+		system "sed -i 's#" + REGEX_THEMES+ "#" + REGEX_THEMES_ASSETS + "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/visor-bundle.js"
+
 		system "sed -i 's#" + REGEX_THEMES2+ "#" + REGEX_THEMES_ASSETS2+ "#g' " + DALI_EDITOR_PLUGIN_PATH + "/app/assets/javascripts/editor/app-bundle.js"
 
     #Visor
